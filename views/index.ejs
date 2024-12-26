@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <h1 class="text-center text-success mb-4">My To-Do List</h1>
+
+        
+        <form action="/insertData" method="POST" class="d-flex justify-content-center mb-4">
+            <input type="text" name="task" placeholder="Add a new task" required class="form-control w-50 me-2">
+            <button type="submit" class="btn btn-success">Add Task</button>
+        </form>
+
+       
+        <ul class="list-group w-50 mx-auto ">
+            <% user.forEach(task => { %>
+                <li class="list-group-item d-flex border-0 justify-content-between align-items-center mb-2 border-secondary
+
+                <%= task.completed ? 'bg-success border-success text-white' : 'bg-white border-secondary' %>">
+             
+                <form action="/toggleTask" method="POST" class="me-3">
+                    <input type="hidden" name="id" value="<%= task.id %>">
+                    <input type="checkbox" onchange="this.form.submit()" <% if (task.completed) { %> checked <% } %> class="form-check-input">
+                </form>
+            
+                <span class="<%= task.completed ? 'text-decoration-line-through' : '' %> flex-grow-1">
+                    <%= task.task %>
+                </span>
+            
+                <a href="/editData?id=<%= task.id %>" class="text-primary me-3">Edit</a>
+            
+                
+                <a href="/deleteData?id=<%= task.id %>" class="text-danger" style="text-decoration: none;">Delete</a>
+            </li>
+            
+            <% }); %>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoXnlhQMBRaK3E41op4phAOOfQ1zT04oAHFR3st8JxMUsxR" crossorigin="anonymous"></script>
+</body>
+</html>
